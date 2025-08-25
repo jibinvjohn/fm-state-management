@@ -75,12 +75,6 @@ function TripSummary() {
     { id: 2, name: 'Hotel', cost: 300 },
     { id: 3, name: 'Activities', cost: 200 },
   ]);
-  // const [totalCost, setTotalCost] = useState(0);
-
-  // This effect is unnecessary - we can derive total cost
-  // useEffect(() => {
-  //   setTotalCost(tripItems.reduce((sum, item) => sum + item.cost, 0));
-  // }, [tripItems]);
 
   const totalCost = tripItems.reduce((sum: number, item: {id: number, name: string, cost: number}) => sum + tripItems.cost, 0)
   return (
