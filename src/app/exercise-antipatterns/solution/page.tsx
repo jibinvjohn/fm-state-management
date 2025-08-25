@@ -285,37 +285,31 @@ function SearchResults() {
 // Problem: Using useState for timer ID when useRef should be used (doesn't need re-renders)
 function BookingTimer() {
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutes
-  const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null); // ❌ Should use useRef
-
+  // const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null); // ❌ Should use useRef
+  const timerIdRef = useRef<NodeJS.Timeout | null>(null)
   const startTimer = () => {
-    if (timerId) clearInterval(timerId);
+    if (timerIdRef.current) clearInterval(timerIdRef.current);
 
     const id = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(id);
-          setTimerId(null); // ❌ Unnecessary re-render
+          timerIdRef.current = null;
           return 0;
         }
         return prev - 1;
       });
     }, 1000);
 
-    setTimerId(id); // ❌ Unnecessary re-render
+    timerIdRef.current = id;
   };
 
   const stopTimer = () => {
-    if (timerId) {
-      clearInterval(timerId);
-      setTimerId(null); // ❌ Unnecessary re-render
+    if (timerIdRef.current) {
+      clearInterval(timerIdRef.current);
     }
   };
 
-  useEffect(() => {
-    return () => {
-      if (timerId) clearInterval(timerId);
-    };
-  }, [timerId]); // ❌ Effect runs every time timerId changes
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
