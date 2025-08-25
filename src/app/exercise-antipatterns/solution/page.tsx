@@ -23,16 +23,17 @@ function FilteredDestinations() {
     { id: 3, name: 'New York', country: 'USA', rating: 4.3 },
   ]);
   const [filterRating, setFilterRating] = useState(4.5);
-  const [filteredDestinations, setFilteredDestinations] = useState<
-    typeof destinations
-  >([]);
+  // const [filteredDestinations, setFilteredDestinations] = useState<
+  //   typeof destinations
+  // >([]);
 
   // This effect is unnecessary - we can derive filtered destinations
-  useEffect(() => {
-    setFilteredDestinations(
-      destinations.filter((dest) => dest.rating >= filterRating)
-    );
-  }, [destinations, filterRating]);
+  // useEffect(() => {
+  //   setFilteredDestinations(
+  //     destinations.filter((dest) => dest.rating >= filterRating)
+  //   );
+  // }, [destinations, filterRating]);
+  const filteredDestinations = destinations.filter((dest) => dest.rating >= filterRating)
 
   return (
     <Card>
@@ -83,13 +84,14 @@ function TripSummary() {
     { id: 2, name: 'Hotel', cost: 300 },
     { id: 3, name: 'Activities', cost: 200 },
   ]);
-  const [totalCost, setTotalCost] = useState(0);
+  // const [totalCost, setTotalCost] = useState(0);
 
   // This effect is unnecessary - we can derive total cost
-  useEffect(() => {
-    setTotalCost(tripItems.reduce((sum, item) => sum + item.cost, 0));
-  }, [tripItems]);
+  // useEffect(() => {
+  //   setTotalCost(tripItems.reduce((sum, item) => sum + item.cost, 0));
+  // }, [tripItems]);
 
+  const totalCost = tripItems.reduce((sum: number, item: {id: number, name: string, cost: number}) => sum + tripItems.cost, 0)
   return (
     <Card>
       <CardHeader>
@@ -125,17 +127,15 @@ function TripSummary() {
 // Problem: Storing available dates in state when they can be derived from booked dates
 function AvailableDates() {
   const [bookedDates] = useState(['2024-06-01', '2024-06-02', '2024-06-03']);
-  const [availableDates, setAvailableDates] = useState<string[]>([]);
+  // const [availableDates, setAvailableDates] = useState<string[]>([]);
 
   // This effect is unnecessary - we can derive available dates
-  useEffect(() => {
     const allDates = Array.from({ length: 30 }, (_, i) => {
       const date = new Date('2024-06-01');
       date.setDate(date.getDate() + i);
       return date.toISOString().split('T')[0];
     });
-    setAvailableDates(allDates.filter((date) => !bookedDates.includes(date)));
-  }, [bookedDates]);
+    const availableDates = allDates.filter((date) => !bookedDates.includes(date));
 
   return (
     <Card>
