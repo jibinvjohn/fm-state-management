@@ -21,8 +21,8 @@ UI -> Payment processor:
 # State diagram
 
 Start with destination
-When the destination si input, put in the check in date
-Then put in the checkout date
+When the destination is input, put in the check in date, there are validations
+Then put in the checkout datem there are validations
 Then add the number of guests
 And then when the user presses search, it'll take us to a search results page
 The search results will be loading, and eventually show up
